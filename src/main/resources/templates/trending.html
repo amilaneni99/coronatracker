@@ -14,23 +14,36 @@
         body{
             font-family: 'Cairo', sans-serif;
         }
-        .status-item{
-            text-align: center;
-            margin: 3px auto;
-            font-size: 1.2rem;
+        #love{
+            animation: heart 1s step-end infinite;
+        }
+
+        @keyframes heart {
+            from, to { color: black }
+            50% { color: tomato; }
         }
         nav li{
             font-size: 1.2rem;
         }
 
         @media (min-width: @screen-sm-min){
+
+            #love{
+                animation: heart 1s step-end infinite;
+            }
+
+            @keyframes heart {
+                from, to { color: black }
+                50% { color: tomato; }
+            }
+
             nav li{
                 font-size: 1.7rem;
             }
 
             #btnTop{
                 position: fixed;
-                bottom: 25px;
+                bottom: 45px;
                 right: 25px;
                 color: white;
                 display: none;
@@ -40,7 +53,7 @@
 
         #btnTop{
             position: fixed;
-            bottom: 25px;
+            bottom: 45px;
             right: 25px;
             color: white;
             display: none;
@@ -83,6 +96,11 @@
             </div>
         </div>
         <div style="height: 40px;"></div>
+    </div>
+    <div class="row bg-light">
+        <div class="col-s6" style="margin: 10px auto;">
+            <h4 style="margin-bottom: 0px">Made with <i class="fa fa-heart" id="love"></i> by <b><a href="https://www.linkedin.com/in/amilaneni-abhinav/" style="color: black">Abhinav</a></b>.</h4>
+        </div>
     </div>
     <a id="btnTop" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fa fa-chevron-up"></i></a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

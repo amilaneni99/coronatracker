@@ -11,8 +11,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="/virus" type="image/x-icon">
     <style>
+        #love{
+            animation: heart 1s step-end infinite;
+        }
+
         body{
             font-family: 'Cairo', sans-serif;
+        }
+        a{
+            color: #7986cb;
+
+            text-decoration: none;
+        }
+        a:hover{
+            color: #3f51b5;
+            font-weight: bold;
+            text-decoration: underline;
         }
         .status-item{
             text-align: center;
@@ -23,8 +37,22 @@
             font-size: 1.2rem;
         }
 
+        @keyframes heart {
+            from, to { color: black }
+            50% { color: tomato; }
+        }
 
         @media (min-width: @screen-sm-min){
+
+            #love{
+                animation: heart 1s step-end infinite;
+            }
+
+            @keyframes heart {
+                from, to { color: black }
+                50% { color: tomato; }
+            }
+
             nav li{
                 font-size: 1.7rem;
             }
@@ -41,7 +69,7 @@
             }
             #btnTop{
                 position: fixed;
-                bottom: 25px;
+                bottom: 45px;
                 right: 25px;
                 display: none;
                 color: white;
@@ -51,7 +79,7 @@
 
         #btnTop{
             position: fixed;
-            bottom: 25px;
+            bottom: 45px;
             right: 25px;
             color: white;
             display: none;
@@ -174,6 +202,11 @@
             <div class="col-md-4 col-10" style="width: 100% !important; margin:10px auto;">
                 <a class="twitter-timeline" data-lang="en" data-width="400" data-height="400" href="https://twitter.com/WHO?ref_src=twsrc%5Etfw">Tweets by WHO</a>
             </div>
+        </div>
+    </div>
+    <div class="row bg-light">
+        <div class="col-s6" style="margin: 10px auto;">
+            <h4 style="margin-bottom: 0px">Made with <i class="fa fa-heart" id="love"></i> by <b><a href="https://www.linkedin.com/in/amilaneni-abhinav/" style="color: black">Abhinav</a></b>.</h4>
         </div>
     </div>
     <a id="btnTop" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fa fa-chevron-up"></i></a>
