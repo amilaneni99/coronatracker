@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Covid-19 Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/virus" type="image/x-icon">
+    <style>
+        body{
+            font-family: 'Cairo', sans-serif;
+        }
+        .status-item{
+            text-align: center;
+            margin: 3px auto;
+            font-size: 1.2rem;
+        }
+        nav li{
+            font-size: 1.2rem;
+        }
+
+
+        @media (min-width: @screen-sm-min){
+            nav li{
+                font-size: 1.7rem;
+            }
+
+            #table-stats{
+                width: 75%;
+                margin: auto;
+            }
+            .status-item{
+                width: 25%;
+                text-align: center;
+                margin: 5px auto;
+                font-size: 2rem;
+            }
+            #btnTop{
+                position: fixed;
+                bottom: 25px;
+                right: 25px;
+                display: none;
+                color: white;
+                background: tomato;
+            }
+        }
+
+        #btnTop{
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            color: white;
+            display: none;
+            background: tomato;
+        }
+
+        #table-stats{
+            width: 100%;
+            margin: auto;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <a style="font-size: 2rem" class="navbar-brand" href="/">Covid-19 Tracker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100 order-3 dual-collapse2" id="navbarNavAltMarkup">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        States-->
+<!--                    </a>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <a class="dropdown-item" th:each="state : ${states}" th:href="'/'+${state.getStateCode()}" th:text="${state.getStateName()}"></a>-->
+<!--                    </div>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/trending">Trending</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            <div id="topSection" class="row justify-content-md-center">
+                <h1 class="col" style="text-align: center;margin:30px; width: 100%;">Covid-19 India Statistics</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-2 status-item text-danger">
+                    <h2>Confirmed</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${nationalStatus.getConfirmed()}"></h3>
+                    <h4>
+                        <span class="text-danger" style="font-size: 1rem; font-weight: bold;" th:if="${nationalStatus.getDeltaConfirmed() != '0'}" th:text="'[↑] ' + ${nationalStatus.getDeltaConfirmed()}"></span>
+                    </h4>
+                </div>
+                <div class="col-6 col-md-2 status-item text-primary">
+                    <h2>Active</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${nationalStatus.getActive()}"></h3>
+                </div>
+                <div class="col-6 col-md-2 status-item text-secondary">
+                    <h2>Deceased</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${nationalStatus.getDeaths()}"></h3>
+                    <h4>
+                        <span class="text-secondary" style="font-size: 1rem; font-weight: bold;" th:if="${nationalStatus.getDeltaDeaths() != '0'}" th:text="'[↑] ' + ${nationalStatus.getDeltaDeaths()}"></span>
+                    </h4>
+                </div>
+                <div class="col-6 col-md-2 status-item text-success">
+                    <h2>Recovered</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${nationalStatus.getRecovered()}"></h3>
+                    <h4>
+                        <span class="text-success" style="font-size: 1rem; font-weight: bold;" th:if="${nationalStatus.getDeltaRecovered() != '0'}" th:text="'[↑] ' + ${nationalStatus.getDeltaRecovered()}"></span>
+                    </h4>
+                </div>
+                <div class="col-6 col-md-2 status-item text-info">
+                    <h2>Tested</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${tested}"></h3>
+                </div>
+            </div>
+        </div>
+        <div style="height: 40px;"></div>
+        <div id="table-stats" class="table-responsive-sm">
+            <table align="center" class="table table-striped table-light">
+                <thead>
+                <tr>
+                    <th scope="col">State/UT</th>
+                    <th scope="col">Confirmed</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Deceased</th>
+                    <th scope="col">Recovered</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="stateStats : ${stateWiseList}">
+                    <th scope="row">
+                        <a th:text="${stateStats.stateName}" th:href="'/states/'+${stateStats.getStateCode()}"></a>
+                    </th>
+                    <td>
+                        <span th:text="${stateStats.confirmed}"></span>
+                        <span class="text-danger" style="font-weight: bold; font-size: 0.75rem; margin: auto;" th:if="${stateStats.getDeltaConfirmed() != '0'}" th:text="' ↑' + ${stateStats.getDeltaConfirmed()}"></span>
+                    </td>
+                    <td th:text="${stateStats.active}"></td>
+                    <td>
+                        <span th:text="${stateStats.deaths}"></span>
+                        <span class="text-secondary" style="font-weight: bold; font-size: 0.75rem; margin: auto;" th:if="${stateStats.getDeltaDeaths() != '0'}" th:text="' ↑' + ${stateStats.getDeltaDeaths()}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${stateStats.getRecovered()}"></span>
+                        <span class="text-success" style="font-weight: bold; font-size: 0.75rem; margin: auto;" th:if="${stateStats.getDeltaRecovered() != '0'}" th:text="' '+'↑' + ${stateStats.getDeltaRecovered()}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 30px;"></div>
+        <div class="row" id="tw">
+            <div class="col-md-4 col-10" style="width: 100% !important; margin:10px auto;">
+                <a class="twitter-timeline" data-lang="en" data-width="400" data-height="400" href="https://twitter.com/MoHFW_INDIA?ref_src=twsrc%5Etfw">Tweets by MoHFW_INDIA</a>
+            </div>
+            <div class="col-md-4 col-10" style="width: 100% !important; margin:10px auto;">
+                <a class="twitter-timeline" data-lang="en" data-width="400" data-height="400" href="https://twitter.com/ICMRDELHI?ref_src=twsrc%5Etfw">Tweets by ICMRDELHI</a>
+            </div>
+            <div class="col-md-4 col-10" style="width: 100% !important; margin:10px auto;">
+                <a class="twitter-timeline" data-lang="en" data-width="400" data-height="400" href="https://twitter.com/WHO?ref_src=twsrc%5Etfw">Tweets by WHO</a>
+            </div>
+        </div>
+    </div>
+    <a id="btnTop" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fa fa-chevron-up"></i></a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 150) {
+                $('#btnTop').show();
+            } else {
+                $('#btnTop').hide();
+            }
+        });
+        $('#btnTop').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

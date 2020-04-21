@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Covid-19 Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="/virus" type="image/x-icon">
+    <style>
+        body{
+            font-family: 'Cairo', sans-serif;
+        }
+        .status-item{
+            text-align: center;
+            margin: 3px auto;
+            font-size: 1.2rem;
+        }
+        nav li{
+            font-size: 1.2rem;
+        }
+
+        .news{
+            font-size: 1rem;
+        }
+
+        @media (min-width: @screen-sm-min){
+            nav li{
+                font-size: 1.7rem;
+            }
+            
+            .status-item{
+                width: 25%;
+                text-align: center;
+                margin: 5px auto;
+                font-size: 2rem;
+            }
+            #btnTop{
+                position: fixed;
+                bottom: 25px;
+                right: 25px;
+                color: white;
+                display: none;
+                background: tomato;
+            }
+        }
+        #btnTop{
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            color: white;
+            display: none;
+            background: tomato;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <a style="font-size: 2rem" class="navbar-brand" href="/">Covid-19 Tracker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100 order-3 dual-collapse2" id="navbarNavAltMarkup">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/trending">Trending</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            <div class="row justify-content-md-center">
+                <h1 class="col" style="text-align: center;margin:30px; width: 100%;">Covid-19 India Statistics</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-3 status-item text-danger">
+                    <h2>Confirmed</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${covidData.getConfirmed()}"></h3>
+                    <h4>
+                        <span class="text-danger" style="font-size: 1rem; font-weight: bold;" th:if="${covidData.getDeltaConfirmed() != '0'}" th:text="'[↑] ' + ${covidData.getDeltaConfirmed()}"></span>
+                    </h4>
+                </div>
+                <div class="col-6 col-md-3 status-item text-primary">
+                    <h2>Active</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${covidData.getActive()}"></h3>
+                </div>
+                <div class="col-6 col-md-3 status-item text-secondary">
+                    <h2>Deceased</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${covidData.getDeaths()}"></h3>
+                    <h4>
+                        <span class="text-secondary" style="font-size: 1rem; font-weight: bold;" th:if="${covidData.getDeltaDeaths() != '0'}" th:text="'[↑] ' + ${covidData.getDeltaDeaths()}"></span>
+                    </h4>
+                </div>
+                <div class="col-6 col-md-3 status-item text-success">
+                    <h2>Recovered</h2>
+                    <h3 style="margin-bottom: 0px;" th:text="${covidData.getRecovered()}"></h3>
+                    <h4>
+                        <span class="text-success" style="font-size: 1rem; font-weight: bold;" th:if="${covidData.getDeltaRecovered() != '0'}" th:text="'[↑] ' + ${covidData.getDeltaRecovered()}"></span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div style="height: 40px;"></div>
+        <div>
+            <h1 style="text-align: center;margin:30px;" th:text="'Trending Today about Covid-19 in '+${stateName}"></h1>
+            <div class="row" style="margin: 10px;" th:each="newsArticle : ${articles}">
+                <div class="card col-12 col-md-9" style="width: 80%; height: auto; margin: auto; padding: 15px;">
+                    <div class="row">
+                        <div class="news col-10 d-none d-sm-none d-md-block">
+                            <a style="max-lines: 2; font-size: 1.3rem;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical;" th:href="${newsArticle.getUrl()}" class="card-title" th:text="${newsArticle.getTitle()}"></a>
+                            <p style="font-weight: bold;margin-top: 0.5rem;margin-bottom: 0.5rem;" class="card-text" th:text="${newsArticle.getSource()}"></p>
+                            <p style="margin-top: 0.5rem;" class="card-text" th:text="${newsArticle.getTime()}"></p>
+                        </div>
+                        <div class="news col-12 d-block d-sm-block d-md-none">
+                            <a style="max-lines: 2; font-size: 1rem;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical;" th:href="${newsArticle.getUrl()}" class="card-title" th:text="${newsArticle.getTitle()}"></a>
+                            <p style="font-weight: bold;margin-top: 0.3rem;margin-bottom: 0.3rem;" class="card-text" th:text="${newsArticle.getSource()}"></p>
+                            <p style="margin-top: 0.5rem;" class="card-text" th:text="${newsArticle.getTime()}"></p>
+                        </div>
+                        <div class="d-sm-none d-none d-md-block news col-2">
+                            <img style="width: 100%; height: 100%;" th:if="${newsArticle.getImageUrl().equals('')}" th:style="'display:none;width: 100%; height: 100%;'"/>
+                            <img style="width: 100%; height: 100%;" th:unless="${newsArticle.getImageUrl().equals('')}" th:style="'display:block;width: 100%; height: 100%;'" th:src="${newsArticle.getImageUrl()}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="btnTop" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fa fa-chevron-up"></i></a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 150) {
+                    $('#btnTop').show();
+                } else {
+                    $('#btnTop').hide();
+                }
+            });
+            $('#btnTop').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 400);
+                return false;
+            });
+        });
+    </script>
+    <script>
+        function init() {
+            var imgDefer = document.getElementsByTagName('img');
+            for (var i=0; i<imgDefer.length; i++) {
+                if(imgDefer[i].getAttribute('data-src')) {
+                    imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+                } } }
+        window.onload = init;
+    </script>
+</body>
+</html>
