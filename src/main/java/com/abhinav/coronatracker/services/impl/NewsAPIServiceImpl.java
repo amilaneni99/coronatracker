@@ -26,7 +26,7 @@ public class NewsAPIServiceImpl implements NewsAPIService {
 
     private List<Articles> articles = new ArrayList<>();
     private int totalResults;
-    private static String NEWS_URL = "http://newsapi.org/v2/top-headlines?q=coronavirus&country=in&apiKey=366ca9c0622f4463a949899d63a200cf";
+    private static String NEWS_URL = "http://newsapi.org/v2/top-headlines?q=coronavirus&country=in&apiKey=YOUR_API_KEY";
 
     public List<Articles> getArticles() {
         return articles;
