@@ -69,7 +69,7 @@ public class CovidDataServiceImpl implements CovidDataService {
 
     @Override
     @PostConstruct
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void fetchAllData() throws IOException, InterruptedException, ParseException {
 
         this.timeUpdated = dateFormat1.format(new Date())+" at "+dateFormat2.format(new Date());
