@@ -21,7 +21,7 @@ public class GoogleNewsServiceImpl implements GoogleNewsService {
     public List<GoogleNewsModel> getArticles(String stateName) throws IOException, InterruptedException {
         newsArticles.clear();
         String state = stateName.replaceAll("\\s+","%20");
-        String tUrl = "https://news.google.com/search?q="+state+"%20Coronavirus";
+        String tUrl = "https://news.google.com/search?q="+state+"%20Covid19";
         Connection connection = Jsoup.connect(tUrl);
         connection.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36");
         connection.referrer(tUrl);
