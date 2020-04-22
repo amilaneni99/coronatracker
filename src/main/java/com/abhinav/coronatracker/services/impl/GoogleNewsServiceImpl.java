@@ -36,13 +36,6 @@ public class GoogleNewsServiceImpl implements GoogleNewsService {
             k+=1;
             Element url = article.select("a[target='_blank']").first();
             String imgUrl = (url.selectFirst("img") != null)? url.selectFirst("img").attr("src"): "";
-//            URL urlTemp = new URL(imgUrl);
-//            HttpURLConnection urlConnection = (HttpURLConnection) urlTemp.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            urlConnection.connect();
-//            if (urlConnection.getResponseCode() == 403) {
-//                imgUrl = "";
-//            }
             Element title = article.select("a[class='DY5T1d']").first();
             Element time = article.select("time").first();
             Element source = article.select("a[class='wEwyrc AVN2gc uQIVzc Sksgp']").first();

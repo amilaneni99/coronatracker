@@ -24,6 +24,8 @@ import java.util.List;
 @Controller
 public class CoronaController {
 
+    int visits = 0;
+
     @Autowired
     CovidDataService covidDataService;
 
@@ -38,6 +40,7 @@ public class CoronaController {
 
     @GetMapping("/")
     public String index(Model model){
+        visits+=1;
         List<StateWise> stateWiseList = covidDataService.getStateWiseList();
         List<Tested> testedList = covidDataService.getTestedList();
         List<CaseTimeSeries> caseTimeSeriesList = covidDataService.getCaseTimeSeriesList();
@@ -49,6 +52,8 @@ public class CoronaController {
         model.addAttribute("lastUpdatedTime",stateWiseList.get(0).getLastUpdatedTime());
         model.addAttribute("refMap",stateTestingService.getRefMap());
         model.addAttribute("states",covidDataService.getStateNames());
+        model.addAttribute("timeUpdated",covidDataService.getTimeUpdated());
+        System.out.println("Last Updated: "+covidDataService.getTimeUpdated()+"\nVisits: "+visits);
         return "index";
     }
 
@@ -72,7 +77,6 @@ public class CoronaController {
             }
         }
         List<GoogleNewsModel> newsArticles = googleNewsService.getArticles(stateName);
-        System.out.println("Size"+newsArticles.size());
         model.addAttribute("articles",newsArticles);
         model.addAttribute("stateName",stateName);
         return "state";

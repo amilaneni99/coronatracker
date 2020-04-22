@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -23,10 +24,14 @@ public class CovidDataServiceImpl implements CovidDataService {
 
     private static String DATA_URL = "https://api.covid19india.org/data.json";
 
+    DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+    DateFormat dateFormat2 = new SimpleDateFormat("hh:mm aa");
+
     public List<StateWise> stateWiseList = new ArrayList<>();
     public List<StateCode> stateNames = new ArrayList<>();
     public List<Tested> testedList = new ArrayList<>();
     public List<CaseTimeSeries> caseTimeSeriesList = new ArrayList<>();
+    public String timeUpdated;
 
     public List<StateWise> getStateWiseList() {
         return stateWiseList;
@@ -45,6 +50,11 @@ public class CovidDataServiceImpl implements CovidDataService {
         return testedList;
     }
 
+    @Override
+    public String getTimeUpdated() {
+        return timeUpdated;
+    }
+
     public void setTestedList(List<Tested> testedList) {
         this.testedList = testedList;
     }
@@ -57,12 +67,12 @@ public class CovidDataServiceImpl implements CovidDataService {
         this.caseTimeSeriesList = caseTimeSeriesList;
     }
 
-
     @Override
-    @Scheduled(cron = "0 0 */3 * * *")
     @PostConstruct
-    @Cacheable("allData")
+    @Scheduled(cron = "0 */1 * * * *")
     public void fetchAllData() throws IOException, InterruptedException, ParseException {
+
+        this.timeUpdated = dateFormat1.format(new Date())+" at "+dateFormat2.format(new Date());
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(DATA_URL))

@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CovidDataService {
-    void fetchAllData() throws IOException, InterruptedException, ParseException;
+    void fetchAllData() throws IOException, InterruptedException, ParseException, java.text.ParseException;
     List<StateWise> getStateWiseList();
     List<StateCode> getStateNames();
     List<CaseTimeSeries> getCaseTimeSeriesList();
     List<Tested> getTestedList();
+    String getTimeUpdated();
 }
