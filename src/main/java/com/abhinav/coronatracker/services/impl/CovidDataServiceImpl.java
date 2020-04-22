@@ -71,7 +71,8 @@ public class CovidDataServiceImpl implements CovidDataService {
     @PostConstruct
     @Scheduled(cron = "0 */30 * * * *")
     public void fetchAllData() throws IOException, InterruptedException, ParseException {
-
+        dateFormat1.setTimeZone(TimeZone.getTimeZone("IST"));
+        dateFormat2.setTimeZone(TimeZone.getTimeZone("IST"));
         this.timeUpdated = dateFormat1.format(new Date())+" at "+dateFormat2.format(new Date());
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
