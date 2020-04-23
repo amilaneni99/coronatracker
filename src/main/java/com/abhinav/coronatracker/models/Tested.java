@@ -23,11 +23,22 @@ public class Tested implements Serializable {
     @JsonProperty("updatetimestamp")
     private String updateTimeStamp;
 
+    @JsonProperty("testpositivityrate")
+    private String testPositivityRate;
+
     @JsonProperty("totalindividualstested")
     private String totalIndividualsTested;
 
     @JsonProperty("totalpositivecases")
     private String totalPositiveCases;
+
+    public String getTestPositivityRate() {
+        return testPositivityRate;
+    }
+
+    public void setTestPositivityRate(String testPositivityRate) {
+        this.testPositivityRate = testPositivityRate;
+    }
 
     public String getTestsConductedByPrivateLabs() {
         return testsConductedByPrivateLabs;

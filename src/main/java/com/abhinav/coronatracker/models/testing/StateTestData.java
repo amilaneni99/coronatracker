@@ -17,6 +17,9 @@ public class StateTestData implements Serializable {
     @JsonProperty("updatedon")
     private String lastUpdated;
 
+    @JsonProperty("testpositivityrate")
+    public String testPositivityRate;
+
     private String negative;
 
     private String numventilators;
@@ -40,6 +43,14 @@ public class StateTestData implements Serializable {
     private String source2;
 
     private String positiveratebytests;
+
+    public String getTestPositivityRate() {
+        return testPositivityRate;
+    }
+
+    public void setTestPositivityRate(String testPositivityRate) {
+        this.testPositivityRate = testPositivityRate;
+    }
 
     public String getNegative() {
         return negative;
