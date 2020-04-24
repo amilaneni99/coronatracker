@@ -3,6 +3,7 @@ package com.abhinav.coronatracker.services.impl;
 import com.abhinav.coronatracker.models.news.Articles;
 import com.abhinav.coronatracker.models.news.NewsModel;
 import com.abhinav.coronatracker.services.NewsAPIService;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -57,6 +58,7 @@ public class NewsAPIServiceImpl implements NewsAPIService {
         JSONParser jsonParser = new JSONParser();
         org.json.simple.JSONObject jsonObject = (JSONObject) jsonParser.parse(httpResponse.body());
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         NewsModel newsModel = objectMapper.readValue(jsonObject.toString(),NewsModel.class);
         this.articles = Arrays.asList(newsModel.getArticles());
         for (Articles article: this.articles){
