@@ -11,7 +11,7 @@ public class StateTestData implements Serializable {
     @JsonProperty("state")
     private String stateName;
 
-    @JsonProperty("source")
+    @JsonProperty("source1")
     private String sourceURL;
 
     @JsonProperty("updatedon")

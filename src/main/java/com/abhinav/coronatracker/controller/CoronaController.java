@@ -15,7 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,9 +51,9 @@ public class CoronaController {
         model.addAttribute("tested",testedList.get(testedList.size()-1).getTotalSamplesTested());
         model.addAttribute("caseTimeSeries",caseTimeSeriesList.subList(caseTimeSeriesList.size()-15,caseTimeSeriesList.size()-1));
         model.addAttribute("nationalStatus",stateWiseList.get(0));
-        model.addAttribute("testMap",stateTestingService.getTestMap());
+//        model.addAttribute("testMap",stateTestingService.getTestMap());
         model.addAttribute("lastUpdatedTime",stateWiseList.get(0).getLastUpdatedTime());
-        model.addAttribute("refMap",stateTestingService.getRefMap());
+//        model.addAttribute("refMap",stateTestingService.getRefMap());
         model.addAttribute("states",covidDataService.getStateNames());
         model.addAttribute("timeUpdated",covidDataService.getTimeUpdated());
         System.out.println("Last Updated: "+covidDataService.getTimeUpdated()+"\nVisits: "+visits);
